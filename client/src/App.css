@@ -1,3 +1,8 @@
+*{
+  box-sizing: border-box;
+}
+
+
 body{
   color: #333;
 }
@@ -67,4 +72,30 @@ div.entry p.description{
   margin: 17px 0;
   line-height: 1.5rem;
 
+}
+
+form.login, form.register{
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input{
+  display: block;
+  margin-bottom: 5px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 9px;
+  background-color: #ddd;
+  border-bottom: 1px solid;
+}
+
+button{
+  width: 100%;
+  display: block;
+  background-color: #555;
+  color: white;
+  border: 0;
+  border-radius: 9px;
+  padding: 6px 0;
 }

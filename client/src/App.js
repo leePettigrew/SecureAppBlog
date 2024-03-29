@@ -4,6 +4,8 @@ import Header from "./Header";
 import {Route, Routes} from "react-router-dom";
 import Layout from './Layout';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 
 
@@ -14,13 +16,19 @@ function App() {
 
         <Route index element={
 
-          <HomePage/>
+          <HomePage />
 
         } />
-        <Route path={'/login'} element={
+        <Route path="/login" element={
           
 
-          <div>Login Page</div>
+          <LoginPage />
+    
+        } />
+        <Route path="/register" element={
+          
+
+          <RegisterPage />
     
         } />
 
