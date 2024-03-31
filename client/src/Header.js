@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
 import {Link} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "./UserContext";
 
-export default function Header () {
+export default function Header() {
   const {setUserInfo,userInfo} = useContext(UserContext);
   useEffect(() => {
-    fetch('http://localhost:3500/profile', {
+    fetch('http://localhost:4000/profile', {
       credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
@@ -14,45 +14,33 @@ export default function Header () {
     });
   }, []);
 
+  function logout() {
+    fetch('http://localhost:4000/logout', {
+      credentials: 'include',
+      method: 'POST',
+    });
+    setUserInfo(null);
+  }
 
+  const username = userInfo?.username;
 
-  // calls the logout api and sets username to null so should refresh the ui
-function logout(){
-  fetch('http://localhost:3500/logout', {
-    credentials: 'include',
-    method: 'POST',
-  });
-  setUserInfo(null);
-}
-
-const username = userInfo?.username;
-
-
-
-    return(
-        <header>
-        <Link to="/" className="logo">Lee Pettigrew's Blog Site</Link>
-  
-        <nav>
-          {username && (
-            <>
-              <Link to="/create">Create New Blog Post</Link>
-              <a onClick={logout}>Logout</a>
-            </>
-          )}
-          {!username && (
-            <>
-              <Link to="/login" >Login</Link>
-              <Link to="/register" >Register</Link>
-            </>
-          )}
-
-
-        </nav>
-  
-  
-      </header>
-
-
-    );
+  return (
+    <header>
+      <Link to="/" className="logo">Lee Pettigrew's Secure App Blog</Link>
+      <nav>
+        {username && (
+          <>
+            <Link to="/create">Create new post</Link>
+            <a onClick={logout}>Logout ({username})</a>
+          </>
+        )}
+        {!username && (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+      </nav>
+    </header>
+  );
 }
