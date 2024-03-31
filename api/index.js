@@ -24,10 +24,12 @@ mongoose.connect('mongodb+srv://leepettigrew:BvnhzlW1kbHhLn0e@cluster0.bsynnkk.m
 app.post('/register', async (req,res) => {
   const {username,password} = req.body;
   try{
+    // In the /register route
     const userDoc = await User.create({
       username,
-      password:bcrypt.hashSync(password,salt),
+      password, // Storing password in plaintext
     });
+
     res.json(userDoc);
   } catch(e) {
     console.log(e);
@@ -37,7 +39,7 @@ app.post('/register', async (req,res) => {
 
 app.post('/login', async (req,res) => {
   const {username,password} = req.body;
-  const userDoc = await User.findOne({username});
+  const userDoc = await User.findOne({ username, password });
   const passOk = bcrypt.compareSync(password, userDoc.password);
   if (passOk) {
     // logged in
@@ -76,13 +78,15 @@ app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
   jwt.verify(token, secret, {}, async (err,info) => {
     if (err) throw err;
     const {title,summary,content} = req.body;
+    
     const postDoc = await Post.create({
       title,
       summary,
-      content,
-      cover:newPath,
-      author:info.id,
+      content, // Content is not sanitized
+      cover: newPath,
+      author: info.id,
     });
+
     res.json(postDoc);
   });
 
